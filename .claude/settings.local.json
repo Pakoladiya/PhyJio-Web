@@ -21,7 +21,12 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://phyjio.nijanandfit.in/icon-192.png)",
       "Bash(curl -s -I https://phyjio.nijanandfit.in/sw.js)",
       "Bash(npm install -D vite-plugin-pwa)",
-      "Bash(del E:/Claude/phyjio-web/public/sw.js E:/Claude/phyjio-web/public/manifest.json)"
+      "Bash(del E:/Claude/phyjio-web/public/sw.js E:/Claude/phyjio-web/public/manifest.json)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://phyjio.nijanandfit.in/sw.js)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://phyjio.nijanandfit.in/manifest.webmanifest)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://phyjio.nijanandfit.in/manifest.json)",
+      "Bash(curl -s https://phyjio.nijanandfit.in/)",
+      "Bash(curl -s https://phyjio.nijanandfit.in/manifest.webmanifest)"
     ]
   }
 }

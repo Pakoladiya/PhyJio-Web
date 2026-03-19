@@ -1,11 +1,17 @@
 import React from 'react'
 import { useDataStore } from '../store/dataStore'
+import { useAuthStore } from '../store/authStore'
 import { useNavigate } from 'react-router-dom'
 
 export default function Dashboard() {
   const { patients, visits } = useDataStore()
+  const { firstName } = useAuthStore()
   const navigate = useNavigate()
   const today = new Date()
+
+  const hour = today.getHours()
+  const greeting = hour < 12 ? 'Good Morning' : hour < 17 ? 'Good Afternoon' : 'Good Evening'
+  const greetingText = `${greeting}${firstName ? `, ${firstName}` : ''} 👋`
 
   // ✅ Today completed visits only
   const todayCompleted = visits.filter(v => {
@@ -62,7 +68,7 @@ export default function Dashboard() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <h2 style={{ fontSize: 24, fontWeight: 800, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,0.15)' }}>
-              Good day 👋
+              {greetingText}
             </h2>
             <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: 13, marginTop: 3 }}>{todayLabel}</p>
           </div>
