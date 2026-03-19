@@ -9,35 +9,23 @@ export default function ActiveVisit() {
   const patient    = patients.find(p => p.id === patientId)
   const [secs, setSecs]   = useState(0)
   const [notes, setNotes] = useState('')
-  const visitId    = useRef<string | null>(null)
-  const timerRef   = useRef<ReturnType<typeof setInterval> | null>(null)
-  const initialized = useRef(false)  // ✅ Guard — prevents double run in StrictMode
+  const visitId     = useRef<string | null>(null)
+  const timerRef    = useRef<ReturnType<typeof setInterval> | null>(null)
+  const initialized = useRef(false)
 
   useEffect(() => {
-    if (initialized.current) return  // ✅ Skip if already ran
+    if (initialized.current) return
     initialized.current = true
-
-    // ✅ Cancel any existing stuck active visits for this patient
-    const stuckVisits = visits.filter(v => v.patientId === patientId && v.status === 'active')
-    stuckVisits.forEach(v => updateVisit(v.id, { status: 'cancelled' }))
-
-    // ✅ Create ONE fresh active visit
+    visits.filter(v => v.patientId === patientId && v.status === 'active')
+          .forEach(v => updateVisit(v.id, { status: 'cancelled' }))
     const v = addVisit({
-      patientId:  patientId!,
-      startTime:  Date.now(),
-      status:     'active',
-      charge:     patient?.chargePerVisit || 0,
-      isPaid:     false,
-      notes:      ''
+      patientId: patientId!, startTime: Date.now(),
+      status: 'active', charge: patient?.chargePerVisit || 0,
+      isPaid: false, notes: '',
     })
     visitId.current = v.id
-
-    // ✅ Start timer
     timerRef.current = setInterval(() => setSecs(s => s + 1), 1000)
-
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current)
-    }
+    return () => { if (timerRef.current) clearInterval(timerRef.current) }
   }, [])
 
   const pad = (n: number) => String(n).padStart(2, '0')
@@ -50,10 +38,8 @@ export default function ActiveVisit() {
     if (timerRef.current) clearInterval(timerRef.current)
     if (visitId.current) {
       updateVisit(visitId.current, {
-        endTime:     Date.now(),
-        durationMin: Math.max(1, Math.round(secs / 60)),
-        status:      'completed',
-        notes
+        endTime: Date.now(), durationMin: Math.max(1, Math.round(secs / 60)),
+        status: 'completed', notes,
       })
     }
     navigate(`/phyjio/patients/${patientId}`, { replace: true })
@@ -62,51 +48,95 @@ export default function ActiveVisit() {
   function cancelVisit() {
     if (!window.confirm('Cancel this visit?')) return
     if (timerRef.current) clearInterval(timerRef.current)
-    if (visitId.current) {
-      updateVisit(visitId.current, { status: 'cancelled' })
-    }
+    if (visitId.current) updateVisit(visitId.current, { status: 'cancelled' })
     navigate(-1)
   }
 
-  if (!patient) return <div style={{ padding: 32 }}>Patient not found</div>
+  if (!patient) return <div style={{ padding: 40, textAlign: 'center', color: 'var(--text-muted)' }}>Patient not found</div>
 
   return (
-    <div style={{ padding: 16, minHeight: '100vh' }}>
-      <h2 style={{ fontSize: 20, fontWeight: 800, paddingTop: 12, marginBottom: 20 }}>Active Visit ▶</h2>
+    <div style={{ background: 'var(--bg)', minHeight: '100%' }}>
 
-      {/* Patient card */}
-      <div style={{ background: 'var(--teal)', borderRadius: 16, padding: 20, marginBottom: 24, color: '#fff' }}>
-        <p style={{ opacity: 0.8, fontSize: 13 }}>Visiting</p>
-        <h3 style={{ fontSize: 22, fontWeight: 800 }}>{patient.fullName}</h3>
-        <p style={{ opacity: 0.85 }}>{patient.ailment}</p>
-        <p style={{ opacity: 0.75, fontSize: 13, marginTop: 4 }}>₹{patient.chargePerVisit} per visit</p>
-      </div>
-
-      {/* Timer */}
-      <div style={{ background: '#fff', borderRadius: 20, padding: 32, textAlign: 'center', marginBottom: 24, boxShadow: 'var(--shadow)' }}>
-        <p style={{ color: 'var(--text-muted)', fontSize: 13, marginBottom: 8 }}>Session Duration</p>
-        <p style={{ fontSize: 60, fontWeight: 800, color: 'var(--teal)', fontVariantNumeric: 'tabular-nums', letterSpacing: 3 }}>
-          {pad(h)}:{pad(m)}:{pad(s)}
+      {/* ── Gradient Patient Header ── */}
+      <div style={{
+        background: 'var(--ig-gradient)',
+        padding: '56px 20px 28px',
+        borderRadius: '0 0 32px 32px',
+        marginBottom: 24,
+      }}>
+        <p style={{ color: 'rgba(255,255,255,0.70)', fontSize: 14, marginBottom: 4, fontWeight: 500 }}>
+          Active Visit
+        </p>
+        <h1 style={{ fontSize: 30, fontWeight: 800, color: '#fff', letterSpacing: -0.3, marginBottom: 4 }}>
+          {patient.fullName}
+        </h1>
+        <p style={{ color: 'rgba(255,255,255,0.78)', fontSize: 15 }}>{patient.ailment}</p>
+        <p style={{ color: 'rgba(255,255,255,0.60)', fontSize: 13, marginTop: 4 }}>
+          ₹{patient.chargePerVisit} per visit
         </p>
       </div>
 
-      {/* Notes */}
-      <label style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', marginBottom: 6, display: 'block' }}>
-        Session Notes
-      </label>
-      <textarea value={notes} onChange={e => setNotes(e.target.value)}
-        placeholder="Exercises done, patient response, progress notes..."
-        style={{ width: '100%', minHeight: 120, padding: '14px 16px', borderRadius: 14, border: '1px solid var(--border)', fontSize: 15, marginBottom: 20, resize: 'vertical', background: '#fff' }} />
+      <div style={{ padding: '0 20px 40px' }}>
 
-      <button onClick={endVisit}
-        style={{ width: '100%', height: 56, borderRadius: 14, background: 'var(--teal)', color: '#fff', fontSize: 17, fontWeight: 700, marginBottom: 12, boxShadow: '0 4px 14px rgba(0,128,128,0.3)' }}>
-        ✅ End & Save Visit
-      </button>
+        {/* ── Timer ── */}
+        <div style={{
+          background: 'var(--surface)', borderRadius: 28,
+          padding: '36px 24px', textAlign: 'center',
+          marginBottom: 20, boxShadow: 'var(--shadow-md)',
+        }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: 13, fontWeight: 600, letterSpacing: 0.5, textTransform: 'uppercase', marginBottom: 12 }}>
+            Session Duration
+          </p>
+          <p style={{
+            fontSize: 72, fontWeight: 800, color: 'var(--brand)',
+            fontVariantNumeric: 'tabular-nums', letterSpacing: 2, lineHeight: 1,
+          }}>
+            {pad(h)}:{pad(m)}:{pad(s)}
+          </p>
+        </div>
 
-      <button onClick={cancelVisit}
-        style={{ width: '100%', height: 48, borderRadius: 14, background: '#fff', border: '1px solid var(--danger)', color: 'var(--danger)', fontSize: 15, fontWeight: 600 }}>
-        ✕ Cancel Visit
-      </button>
+        {/* ── Notes ── */}
+        <div style={{
+          background: 'var(--surface)', borderRadius: 24,
+          padding: '18px 18px 4px', marginBottom: 24, boxShadow: 'var(--shadow)',
+        }}>
+          <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 10, textTransform: 'uppercase', letterSpacing: 0.5 }}>
+            Session Notes
+          </p>
+          <textarea
+            value={notes} onChange={e => setNotes(e.target.value)}
+            placeholder="Exercises done, patient response, progress notes…"
+            style={{
+              width: '100%', minHeight: 110, padding: '0 0 16px',
+              border: 'none', fontSize: 16, color: 'var(--text)',
+              background: 'transparent', resize: 'vertical', lineHeight: 1.5,
+            }}
+          />
+        </div>
+
+        {/* ── Actions ── */}
+        <button onClick={endVisit}
+          style={{
+            width: '100%', height: 58, borderRadius: 20,
+            background: 'var(--ig-gradient)',
+            color: '#fff', fontSize: 17, fontWeight: 700,
+            marginBottom: 12,
+            boxShadow: '0 6px 20px rgba(221,42,123,0.35)',
+          }}>
+          ✅ End & Save Visit
+        </button>
+
+        <button onClick={cancelVisit}
+          style={{
+            width: '100%', height: 50, borderRadius: 20,
+            background: 'rgba(255,59,48,0.08)',
+            border: '1px solid rgba(255,59,48,0.22)',
+            color: 'var(--danger)', fontSize: 15, fontWeight: 600,
+          }}>
+          ✕ Cancel Visit
+        </button>
+
+      </div>
     </div>
   )
 }

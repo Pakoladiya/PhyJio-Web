@@ -27,7 +27,16 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://phyjio.nijanandfit.in/manifest.json)",
       "Bash(curl -s https://phyjio.nijanandfit.in/)",
       "Bash(curl -s https://phyjio.nijanandfit.in/manifest.webmanifest)",
-      "Bash(npm install idb-keyval)"
+      "Bash(npm install idb-keyval)",
+      "Bash(git add src/screens/PatientDetail.tsx)",
+      "Bash(git commit -m \"Add Log Visit form for past-date and multiple daily visits:*)",
+      "Bash(git push origin main)",
+      "Bash(git commit -m \"Replace Log Visit form with tap-a-date calendar:*)",
+      "Bash(for f in \"E:\\\\Claude\\\\phyjio-web\\\\src\\\\screens\\\\Dashboard.tsx\" \"E:\\\\Claude\\\\phyjio-web\\\\src\\\\screens\\\\PatientList.tsx\" \"E:\\\\Claude\\\\phyjio-web\\\\src\\\\screens\\\\AddPatient.tsx\" \"E:\\\\Claude\\\\phyjio-web\\\\src\\\\screens\\\\Billing.tsx\" \"E:\\\\Claude\\\\phyjio-web\\\\src\\\\screens\\\\LockScreen.tsx\" \"E:\\\\Claude\\\\phyjio-web\\\\src\\\\screens\\\\RegisterScreen.tsx\" \"E:\\\\Claude\\\\phyjio-web\\\\src\\\\screens\\\\VisitLog.tsx\" \"E:\\\\Claude\\\\phyjio-web\\\\src\\\\screens\\\\ActiveVisit.tsx\" \"E:\\\\Claude\\\\phyjio-web\\\\src\\\\screens\\\\RecordsScreen.tsx\" \"E:\\\\Claude\\\\phyjio-web\\\\src\\\\screens\\\\PatientDetail.tsx\")",
+      "Bash(do head -1 \"$f\")",
+      "Bash(done)",
+      "Bash(git -C \"E:/Claude/phyjio-web\" add -A)",
+      "Bash(git -C \"E:/Claude/phyjio-web\" status --short)"
     ]
   }
 }

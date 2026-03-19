@@ -5,19 +5,13 @@ import { useNavigate } from 'react-router-dom'
 export default function LockScreen() {
   const { firstName, hasBiometric, login, loginWithBiometric, isAuthenticated } = useAuthStore()
   const navigate = useNavigate()
-  const [pin,   setPin]   = useState('')
-  const [shake, setShake] = useState(false)
-  const [error, setError] = useState('')
-  const [bioLoading, setBio] = useState(false)
+  const [pin,      setPin]    = useState('')
+  const [shake,    setShake]  = useState(false)
+  const [error,    setError]  = useState('')
+  const [bioLoading, setBio]  = useState(false)
 
-  useEffect(() => {
-    if (isAuthenticated) navigate('/phyjio', { replace: true })
-  }, [isAuthenticated])
-
-  // Auto-trigger biometric on mount if available
-  useEffect(() => {
-    if (hasBiometric) handleBiometric()
-  }, [])
+  useEffect(() => { if (isAuthenticated) navigate('/phyjio', { replace: true }) }, [isAuthenticated])
+  useEffect(() => { if (hasBiometric) handleBiometric() }, [])
 
   function triggerShake(msg: string) {
     setError(msg); setShake(true)
@@ -30,80 +24,107 @@ export default function LockScreen() {
     setPin(next)
     if (next.length === 4) {
       const ok = login(next)
-      if (!ok) { triggerShake('Wrong PIN. Try again.'); setPin('') }
+      if (!ok) { triggerShake('Wrong PIN — try again'); setPin('') }
     }
   }
-
-  function del() { setPin(p => p.slice(0, -1)) }
 
   async function handleBiometric() {
     setBio(true)
     const ok = await loginWithBiometric()
     setBio(false)
-    if (!ok) setError('Biometric failed. Enter PIN.')
+    if (!ok) setError('Biometric failed — enter PIN')
   }
 
   const keys = ['1','2','3','4','5','6','7','8','9','','0','⌫']
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--teal)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+    <div style={{
+      minHeight: '100vh',
+      background: 'var(--ig-gradient)',
+      display: 'flex', flexDirection: 'column',
+      alignItems: 'center', justifyContent: 'center',
+      padding: 28,
+    }}>
 
-      <img src="/icon-192.png" alt="PhyJio" style={{ width: 72, height: 72, borderRadius: 18, marginBottom: 8, boxShadow: '0 4px 20px rgba(0,0,0,0.2)' }} />
+      {/* Logo + Title */}
+      <img src="/icon-192.png" alt="PhyJio" style={{
+        width: 80, height: 80, borderRadius: 22,
+        marginBottom: 12, boxShadow: '0 8px 28px rgba(0,0,0,0.22)',
+      }} />
       <h1 style={{ color: '#fff', fontSize: 30, fontWeight: 800, marginBottom: 4 }}>PhyJio</h1>
-      <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 14, marginBottom: 32 }}>
-        Welcome back{firstName ? `, ${firstName}` : ''} 👋
+      <p style={{ color: 'rgba(255,255,255,0.70)', fontSize: 15, marginBottom: 40, fontWeight: 500 }}>
+        {firstName ? `Welcome back, ${firstName}` : 'Please unlock to continue'}
       </p>
 
+      {/* PIN Card (glassmorphism) */}
       <div style={{
-        background: 'rgba(255,255,255,0.13)', borderRadius: 24, padding: '32px 28px',
-        width: '100%', maxWidth: 320,
-        animation: shake ? 'shake 0.4s' : 'none'
+        background: 'rgba(255,255,255,0.15)',
+        backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
+        border: '1px solid rgba(255,255,255,0.30)',
+        borderRadius: 32, padding: '32px 28px',
+        width: '100%', maxWidth: 330,
+        animation: shake ? 'shake 0.45s ease' : 'none',
       }}>
-        <p style={{ color: '#fff', textAlign: 'center', fontSize: 16, fontWeight: 600, marginBottom: 24 }}>Enter PIN</p>
+        <p style={{ color: '#fff', textAlign: 'center', fontSize: 17, fontWeight: 600, marginBottom: 28 }}>
+          Enter PIN
+        </p>
 
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 18, marginBottom: 32 }}>
+        {/* Dots */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 20, marginBottom: 36 }}>
           {[0,1,2,3].map(i => (
-            <div key={i} style={{ width: 16, height: 16, borderRadius: '50%', background: i < pin.length ? '#fff' : 'rgba(255,255,255,0.3)', transition: 'background 0.15s' }} />
+            <div key={i} style={{
+              width: 14, height: 14, borderRadius: '50%',
+              background: i < pin.length ? '#fff' : 'rgba(255,255,255,0.30)',
+              transition: 'background 0.15s ease, transform 0.15s ease',
+              transform: i < pin.length ? 'scale(1.15)' : 'scale(1)',
+            }} />
           ))}
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
+        {/* Keypad */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10 }}>
           {keys.map((k, i) => (
             <button key={i}
-              onClick={() => k === '⌫' ? del() : k ? press(k) : undefined}
+              onClick={() => k === '⌫' ? setPin(p => p.slice(0,-1)) : k ? press(k) : undefined}
               style={{
-                height: 64, borderRadius: 16, fontSize: 24, fontWeight: 700,
-                background: k === '' ? 'transparent' : 'rgba(255,255,255,0.15)',
-                color: '#fff', border: 'none',
+                height: 66, borderRadius: 18, fontSize: 26, fontWeight: 700,
+                background: k === '' ? 'transparent' : 'rgba(255,255,255,0.18)',
+                color: '#fff', border: k === '' ? 'none' : '1px solid rgba(255,255,255,0.12)',
                 cursor: k === '' ? 'default' : 'pointer',
-              }}
-              onTouchStart={e => { if (k) e.currentTarget.style.background = 'rgba(255,255,255,0.3)' }}
-              onTouchEnd={e   => { if (k) e.currentTarget.style.background = 'rgba(255,255,255,0.15)' }}
-            >
+                letterSpacing: k === '⌫' ? 0 : 0,
+              }}>
               {k}
             </button>
           ))}
         </div>
 
-        {error && <p style={{ color: '#FFD0D0', textAlign: 'center', marginTop: 16, fontSize: 13 }}>{error}</p>}
+        {error && (
+          <p style={{ color: '#FFD0D0', textAlign: 'center', marginTop: 18, fontSize: 14, fontWeight: 500 }}>
+            {error}
+          </p>
+        )}
       </div>
 
       {/* Biometric button */}
       {hasBiometric && (
-        <button onClick={handleBiometric} disabled={bioLoading} style={{
-          marginTop: 24, display: 'flex', alignItems: 'center', gap: 10,
-          background: 'rgba(255,255,255,0.18)', border: '1.5px solid rgba(255,255,255,0.35)',
-          borderRadius: 16, padding: '14px 28px', color: '#fff', fontSize: 15, fontWeight: 600,
-          cursor: 'pointer'
-        }}>
-          <span style={{ fontSize: 24 }}>👆</span>
+        <button
+          onClick={handleBiometric}
+          disabled={bioLoading}
+          style={{
+            marginTop: 24,
+            display: 'flex', alignItems: 'center', gap: 10,
+            background: 'rgba(255,255,255,0.18)',
+            backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.30)',
+            borderRadius: 20, padding: '14px 30px',
+            color: '#fff', fontSize: 15, fontWeight: 600,
+          }}>
+          <span style={{ fontSize: 26 }}>👆</span>
           {bioLoading ? 'Verifying…' : 'Use Fingerprint / Face ID'}
         </button>
       )}
 
-      <style>{`
-        @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-10px)} 40%{transform:translateX(10px)} 60%{transform:translateX(-8px)} 80%{transform:translateX(8px)} }
-      `}</style>
+      <style>{`@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-11px)}40%{transform:translateX(10px)}60%{transform:translateX(-7px)}80%{transform:translateX(7px)}}`}</style>
     </div>
   )
 }
