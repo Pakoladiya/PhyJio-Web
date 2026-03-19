@@ -47,6 +47,11 @@ export default function QuickComm() {
   const extraLabel = sel === 'delay' ? 'Minutes late' : sel === 'charges' ? 'Per visit charge (₹)' : sel === 'bill' ? 'Bill amount (₹)' : 'Reason'
   const extraHint  = sel === 'delay' ? '15' : sel === 'charges' || sel === 'bill' ? '500' : 'e.g. Personal emergency'
 
+  function contactDev() {
+    const msg = encodeURIComponent('Hello, I am using PhyJio app and need some help.')
+    window.open(`https://wa.me/919228108454?text=${msg}`, '_blank')
+  }
+
   return (
     <div style={{ padding:16 }}>
       <h2 style={{ fontSize:22, fontWeight:800, paddingTop:12, marginBottom:16 }}>Quick Messages</h2>
@@ -102,6 +107,22 @@ export default function QuickComm() {
           </button>
         </>
       )}
+      {/* Developer contact */}
+      <div style={{ marginTop: 32, borderTop: '1px solid var(--border)', paddingTop: 20 }}>
+        <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 10, textAlign: 'center' }}>Need help with the app?</p>
+        <button onClick={contactDev} style={{
+          width: '100%', padding: '16px', borderRadius: 14,
+          background: '#fff', border: '1.5px solid #25D366',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+          cursor: 'pointer'
+        }}>
+          <span style={{ fontSize: 22 }}>💬</span>
+          <div style={{ textAlign: 'left' }}>
+            <p style={{ fontWeight: 700, fontSize: 14, color: '#25D366' }}>Contact Developer</p>
+            <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>WhatsApp support</p>
+          </div>
+        </button>
+      </div>
     </div>
   )
 }

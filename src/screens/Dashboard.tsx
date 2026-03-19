@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Dashboard() {
   const { patients, visits } = useDataStore()
-  const { firstName } = useAuthStore()
+  const { prefix, firstName, suffix, logout } = useAuthStore()
   const navigate = useNavigate()
   const today = new Date()
 
   const hour = today.getHours()
   const greeting = hour < 12 ? 'Good Morning' : hour < 17 ? 'Good Afternoon' : 'Good Evening'
-  const greetingText = `${greeting}${firstName ? `, ${firstName}` : ''} 👋`
+  const displayName = [prefix, firstName, suffix].filter(Boolean).join(' ')
 
   // ✅ Today completed visits only
   const todayCompleted = visits.filter(v => {
@@ -65,24 +65,33 @@ export default function Dashboard() {
         borderRadius: '0 0 32px 32px',
         marginBottom: 20,
       }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
+            <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: 15, fontWeight: 600, marginBottom: 2 }}>{greeting}</p>
             <h2 style={{ fontSize: 24, fontWeight: 800, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,0.15)' }}>
-              {greetingText}
+              {displayName}
             </h2>
-            <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: 13, marginTop: 3 }}>{todayLabel}</p>
+            <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 12, marginTop: 3 }}>{todayLabel}</p>
           </div>
-          <button onClick={() => navigate('/phyjio/patients/add')}
-            style={{
-              width: 46, height: 46, borderRadius: 23,
-              background: 'rgba(255,255,255,0.25)',
-              color: '#fff', fontSize: 28,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              backdropFilter: 'blur(6px)',
-              boxShadow: '0 2px 12px rgba(0,0,0,0.15)'
-            }}>
-            +
-          </button>
+          <div style={{ display: 'flex', gap: 10 }}>
+            <button onClick={() => navigate('/phyjio/patients/add')}
+              style={{
+                width: 44, height: 44, borderRadius: 22,
+                background: 'rgba(255,255,255,0.25)',
+                color: '#fff', fontSize: 26,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                backdropFilter: 'blur(6px)', border: 'none', cursor: 'pointer',
+                boxShadow: '0 2px 12px rgba(0,0,0,0.15)'
+              }}>+</button>
+            <button onClick={() => { logout(); navigate('/phyjio/lock', { replace: true }) }}
+              style={{
+                width: 44, height: 44, borderRadius: 22,
+                background: 'rgba(255,255,255,0.2)',
+                color: '#fff', fontSize: 18,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                backdropFilter: 'blur(6px)', border: '1.5px solid rgba(255,255,255,0.3)', cursor: 'pointer',
+              }}>🔒</button>
+          </div>
         </div>
 
         {/* ✅ Active visit banner inside header */}

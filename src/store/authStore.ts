@@ -4,13 +4,15 @@ import { persist } from 'zustand/middleware'
 interface AuthState {
   isAuthenticated: boolean
   isRegistered: boolean
+  prefix: string
   firstName: string
   lastName: string
+  suffix: string
   pin: string
   hasBiometric: boolean
   credentialId: string | null
 
-  register: (firstName: string, lastName: string, pin: string) => void
+  register: (prefix: string, firstName: string, lastName: string, suffix: string, pin: string) => void
   login: (entered: string) => boolean
   setupBiometric: () => Promise<boolean>
   loginWithBiometric: () => Promise<boolean>
@@ -22,14 +24,16 @@ export const useAuthStore = create<AuthState>()(
     (set, get) => ({
       isAuthenticated: false,
       isRegistered: false,
+      prefix: 'Dr.',
       firstName: '',
       lastName: '',
+      suffix: 'PT',
       pin: '',
       hasBiometric: false,
       credentialId: null,
 
-      register: (firstName, lastName, pin) => {
-        set({ firstName, lastName, pin, isRegistered: true, isAuthenticated: true })
+      register: (prefix, firstName, lastName, suffix, pin) => {
+        set({ prefix, firstName, lastName, suffix, pin, isRegistered: true, isAuthenticated: true })
       },
 
       login: (entered: string) => {

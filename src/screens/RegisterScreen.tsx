@@ -8,15 +8,17 @@ export default function RegisterScreen() {
   const { register, setupBiometric } = useAuthStore()
   const navigate = useNavigate()
 
-  const [step, setStep]         = useState<Step>('name')
-  const [firstName, setFirst]   = useState('')
-  const [lastName, setLast]     = useState('')
-  const [pin, setPin]           = useState('')
-  const [confirm, setConfirm]   = useState('')
-  const [tempPin, setTempPin]   = useState('')
-  const [shake, setShake]       = useState(false)
-  const [error, setError]       = useState('')
-  const [bioLoading, setBio]    = useState(false)
+  const [step, setStep]       = useState<Step>('name')
+  const [prefix, setPrefix]   = useState('Dr.')
+  const [firstName, setFirst] = useState('')
+  const [lastName, setLast]   = useState('')
+  const [suffix, setSuffix]   = useState('PT')
+  const [pin, setPin]         = useState('')
+  const [confirm, setConfirm] = useState('')
+  const [tempPin, setTempPin] = useState('')
+  const [shake, setShake]     = useState(false)
+  const [error, setError]     = useState('')
+  const [bioLoading, setBio]  = useState(false)
 
   function triggerShake(msg: string) {
     setError(msg); setShake(true)
@@ -39,7 +41,7 @@ export default function RegisterScreen() {
       setConfirm(next)
       if (next.length === 4) {
         if (next === tempPin) {
-          register(firstName.trim(), lastName.trim(), next)
+          register(prefix.trim(), firstName.trim(), lastName.trim(), suffix.trim(), next)
           setStep('biometric')
         } else {
           triggerShake('PINs do not match. Try again.')
@@ -61,6 +63,12 @@ export default function RegisterScreen() {
     navigate('/phyjio', { replace: true })
   }
 
+  const inputStyle: React.CSSProperties = {
+    width: '100%', padding: '14px 16px', borderRadius: 12, border: 'none',
+    background: 'rgba(255,255,255,0.2)', color: '#fff', fontSize: 15,
+    marginBottom: 12, outline: 'none', boxSizing: 'border-box'
+  }
+
   const current = step === 'confirm' ? confirm : pin
   const keys    = ['1','2','3','4','5','6','7','8','9','','0','⌫']
 
@@ -76,26 +84,44 @@ export default function RegisterScreen() {
         <div style={{ background: 'rgba(255,255,255,0.13)', borderRadius: 24, padding: '32px 24px', width: '100%', maxWidth: 320 }}>
           <p style={{ color: '#fff', fontWeight: 700, fontSize: 16, marginBottom: 20, textAlign: 'center' }}>What's your name?</p>
 
-          <input
-            placeholder="First Name *"
-            value={firstName}
-            onChange={e => { setFirst(e.target.value); setError('') }}
-            style={{
-              width: '100%', padding: '14px 16px', borderRadius: 12, border: 'none',
-              background: 'rgba(255,255,255,0.2)', color: '#fff', fontSize: 15,
-              marginBottom: 12, outline: 'none', boxSizing: 'border-box'
-            }}
-          />
-          <input
-            placeholder="Last Name (optional)"
-            value={lastName}
-            onChange={e => setLast(e.target.value)}
-            style={{
-              width: '100%', padding: '14px 16px', borderRadius: 12, border: 'none',
-              background: 'rgba(255,255,255,0.2)', color: '#fff', fontSize: 15,
-              marginBottom: 20, outline: 'none', boxSizing: 'border-box'
-            }}
-          />
+          {/* Prefix + First name row */}
+          <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+            <input
+              placeholder="Prefix"
+              value={prefix}
+              onChange={e => setPrefix(e.target.value)}
+              style={{ ...inputStyle, width: 80, marginBottom: 0, flexShrink: 0, textAlign: 'center' }}
+            />
+            <input
+              placeholder="First Name *"
+              value={firstName}
+              onChange={e => { setFirst(e.target.value); setError('') }}
+              style={{ ...inputStyle, marginBottom: 0, flex: 1 }}
+            />
+          </div>
+
+          {/* Last name + Suffix row */}
+          <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+            <input
+              placeholder="Last Name"
+              value={lastName}
+              onChange={e => setLast(e.target.value)}
+              style={{ ...inputStyle, marginBottom: 0, flex: 1 }}
+            />
+            <input
+              placeholder="Suffix"
+              value={suffix}
+              onChange={e => setSuffix(e.target.value)}
+              style={{ ...inputStyle, width: 70, marginBottom: 0, flexShrink: 0, textAlign: 'center' }}
+            />
+          </div>
+
+          {/* Preview */}
+          {firstName && (
+            <p style={{ color: 'rgba(255,255,255,0.8)', textAlign: 'center', fontSize: 13, marginBottom: 16 }}>
+              {[prefix, firstName, lastName, suffix].filter(Boolean).join(' ')}
+            </p>
+          )}
 
           {error && <p style={{ color: '#FFD0D0', fontSize: 13, marginBottom: 12, textAlign: 'center' }}>{error}</p>}
 
@@ -132,12 +158,9 @@ export default function RegisterScreen() {
                 style={{
                   height: 64, borderRadius: 16, fontSize: 24, fontWeight: 700,
                   background: k === '' ? 'transparent' : 'rgba(255,255,255,0.15)',
-                  color: '#fff', border: 'none',
-                  cursor: k === '' ? 'default' : 'pointer',
+                  color: '#fff', border: 'none', cursor: k === '' ? 'default' : 'pointer',
                 }}
-              >
-                {k}
-              </button>
+              >{k}</button>
             ))}
           </div>
 
