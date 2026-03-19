@@ -12,7 +12,16 @@
       "Bash(curl -I https://phyjio.nijanandfit.in)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://phyjio.nijanandfit.in)",
       "Bash(npm run build)",
-      "Bash(find src -name \"*.js\" -not -name \"*.config.js\" -delete)"
+      "Bash(find src -name \"*.js\" -not -name \"*.config.js\" -delete)",
+      "Bash(npm install vite@^5.4.0 @vitejs/plugin-react@^4.3.0)",
+      "Bash(node -e \"const p=require\\(''./package.json''\\); console.log\\(''vite:'',p.dependencies?.vite||p.devDependencies?.vite\\); console.log\\(''plugin-react:'',p.devDependencies?.[''@vitejs/plugin-react'']\\)\")",
+      "Bash(git mv src/app.tsx src/App_temp.tsx)",
+      "Bash(git mv src/App_temp.tsx src/App.tsx)",
+      "Bash(curl -s https://phyjio.nijanandfit.in/manifest.json)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://phyjio.nijanandfit.in/icon-192.png)",
+      "Bash(curl -s -I https://phyjio.nijanandfit.in/sw.js)",
+      "Bash(npm install -D vite-plugin-pwa)",
+      "Bash(del E:/Claude/phyjio-web/public/sw.js E:/Claude/phyjio-web/public/manifest.json)"
     ]
   }
 }
