@@ -40,7 +40,7 @@ export default function AddPatient() {
     }
     if (existing) { updatePatient(existing.id, data) }
     else { addPatient(data) }
-    navigate('/phyjio/patients')
+    navigate('/phygeo/patients')
   }
 
   // ── Shared styles ──

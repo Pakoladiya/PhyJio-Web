@@ -10,8 +10,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icon-192.png', 'icon-512.png'],
       manifest: {
-        name: 'PhyJio',
-        short_name: 'PhyJio',
+        name: 'PhyGeo',
+        short_name: 'PhyGeo',
         description: 'Physiotherapy clinic management',
         theme_color: '#008080',
         background_color: '#ffffff',

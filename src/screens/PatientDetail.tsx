@@ -112,10 +112,10 @@ export default function PatientDetail() {
         {/* Action buttons 2×2 */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 24 }}>
           {[
-            { label: '▶ Start Visit',    bg: 'var(--ig-gradient)', color: '#fff',        shadow: '0 4px 14px rgba(221,42,123,0.30)', go: () => navigate(`/phyjio/visit/active/${patient.id}`) },
+            { label: '▶ Start Visit',    bg: 'var(--ig-gradient)', color: '#fff',        shadow: '0 4px 14px rgba(221,42,123,0.30)', go: () => navigate(`/phygeo/visit/active/${patient.id}`) },
             { label: '📋 Log Visit',     bg: 'rgba(221,42,123,0.08)', color: 'var(--brand)', shadow: 'none', go: () => { setShowCal(c => !c); setSelKey(''); setCalNotes('') } },
-            { label: '🧾 Bill',          bg: 'var(--surface)', color: 'var(--text)',     shadow: 'var(--shadow)', go: () => navigate('/phyjio/billing', { state: { patient } }) },
-            { label: '✏️ Edit',          bg: 'var(--surface)', color: 'var(--text)',     shadow: 'var(--shadow)', go: () => navigate('/phyjio/patients/add', { state: { patient } }) },
+            { label: '🧾 Bill',          bg: 'var(--surface)', color: 'var(--text)',     shadow: 'var(--shadow)', go: () => navigate('/phygeo/billing', { state: { patient } }) },
+            { label: '✏️ Edit',          bg: 'var(--surface)', color: 'var(--text)',     shadow: 'var(--shadow)', go: () => navigate('/phygeo/patients/add', { state: { patient } }) },
           ].map((a, i) => (
             <button key={i} onClick={a.go}
               style={{ height: 54, borderRadius: 18, background: a.bg, color: a.color, fontWeight: 700, fontSize: 14, boxShadow: a.shadow, border: a.bg === 'var(--surface)' ? '1px solid var(--separator)' : 'none' }}>

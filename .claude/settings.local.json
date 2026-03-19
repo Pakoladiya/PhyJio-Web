@@ -36,7 +36,13 @@
       "Bash(do head -1 \"$f\")",
       "Bash(done)",
       "Bash(git -C \"E:/Claude/phyjio-web\" add -A)",
-      "Bash(git -C \"E:/Claude/phyjio-web\" status --short)"
+      "Bash(git -C \"E:/Claude/phyjio-web\" status --short)",
+      "Bash(git -C \"E:/Claude/phyjio-web\" commit -m \"Refactor UI to iOS 17+ Human Interface Guidelines:*)",
+      "Bash(git -C \"E:/Claude/phyjio-web\" push origin main)",
+      "Bash(xargs sed -i 's/PhyJio/PhyGeo/g; s/phyjio/phygeo/g')",
+      "Bash(echo \"Done: $?\")",
+      "Bash(wc -l grep -rn \"PhyGeo\\\\|phygeo\" \"E:/Claude/phyjio-web/src\" \"E:/Claude/phyjio-web/index.html\" \"E:/Claude/phyjio-web/package.json\" \"E:/Claude/phyjio-web/vite.config.ts\")",
+      "Bash(git -C \"E:/Claude/phyjio-web\" commit -m \"Rename app from PhyJio to PhyGeo:*)"
     ]
   }
 }

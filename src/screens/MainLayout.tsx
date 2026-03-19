@@ -2,11 +2,11 @@ import React from 'react'
 import { Outlet, NavLink } from 'react-router-dom'
 
 const tabs = [
-  { to: '/phyjio',          icon: '🏠', label: 'Home',    end: true  },
-  { to: '/phyjio/patients', icon: '👥', label: 'Patients'            },
-  { to: '/phyjio/visits',   icon: '⏱️', label: 'Visits'             },
-  { to: '/phyjio/records',  icon: '📂', label: 'Records'             },
-  { to: '/phyjio/billing',  icon: '🧾', label: 'Billing'             },
+  { to: '/phygeo',          icon: '🏠', label: 'Home',    end: true  },
+  { to: '/phygeo/patients', icon: '👥', label: 'Patients'            },
+  { to: '/phygeo/visits',   icon: '⏱️', label: 'Visits'             },
+  { to: '/phygeo/records',  icon: '📂', label: 'Records'             },
+  { to: '/phygeo/billing',  icon: '🧾', label: 'Billing'             },
 ]
 
 export default function MainLayout() {

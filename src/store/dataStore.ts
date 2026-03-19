@@ -121,6 +121,6 @@ export const useDataStore = create<DataState>()(
       deletePayment: (id) =>
         set((s) => ({ payments: s.payments.filter((p) => p.id !== id) })),
     }),
-    { name: 'phyjio-data' }
+    { name: 'phygeo-data' }
   )
 )

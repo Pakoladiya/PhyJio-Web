@@ -56,7 +56,7 @@ export const useAuthStore = create<AuthState>()(
           const credential = await navigator.credentials.create({
             publicKey: {
               challenge,
-              rp: { name: 'PhyJio', id: window.location.hostname },
+              rp: { name: 'PhyGeo', id: window.location.hostname },
               user: {
                 id: userId,
                 name: `${firstName} ${lastName}`,
@@ -113,6 +113,6 @@ export const useAuthStore = create<AuthState>()(
 
       logout: () => set({ isAuthenticated: false }),
     }),
-    { name: 'phyjio-auth' }
+    { name: 'phygeo-auth' }
   )
 )

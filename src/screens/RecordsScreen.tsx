@@ -285,7 +285,7 @@ export default function RecordsScreen() {
         {/* Developer contact */}
         <div style={{ marginTop: 48, textAlign: 'center' }}>
           <button
-            onClick={() => window.open('https://wa.me/919228108454?text=' + encodeURIComponent('Hello, I need help with PhyJio app.'), '_blank')}
+            onClick={() => window.open('https://wa.me/919228108454?text=' + encodeURIComponent('Hello, I need help with PhyGeo app.'), '_blank')}
             style={{ color: 'var(--text-muted)', fontSize: 12, display: 'inline-flex', alignItems: 'center', gap: 4, fontWeight: 500 }}>
             💬 Contact Developer
           </button>

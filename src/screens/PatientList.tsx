@@ -30,7 +30,7 @@ export default function PatientList() {
           {/* Large Title */}
           <h1 style={{ fontSize: 34, fontWeight: 800, letterSpacing: -0.5 }}>Patients</h1>
           <button
-            onClick={() => navigate('/phyjio/patients/add')}
+            onClick={() => navigate('/phygeo/patients/add')}
             style={{
               width: 40, height: 40, borderRadius: 20,
               background: 'var(--ig-gradient)',
@@ -81,7 +81,7 @@ export default function PatientList() {
         ) : list.map((p, idx) => (
           <div
             key={p.id}
-            onClick={() => navigate(`/phyjio/patients/${p.id}`)}
+            onClick={() => navigate(`/phygeo/patients/${p.id}`)}
             style={{
               background:   'var(--surface)',
               borderRadius:  22,

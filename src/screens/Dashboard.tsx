@@ -41,10 +41,10 @@ export default function Dashboard() {
   ]
 
   const actions = [
-    { icon: '👤', label: 'Add Patient',  g: '#FEDA77, #F58529', go: '/phyjio/patients/add' },
-    { icon: '⏱️', label: 'Log Visit',   g: '#F58529, #DD2A7B', go: '/phyjio/patients'     },
-    { icon: '📂', label: 'Records',      g: '#DD2A7B, #8134AF', go: '/phyjio/records'      },
-    { icon: '🧾', label: 'Billing',      g: '#8134AF, #515BD4', go: '/phyjio/billing'      },
+    { icon: '👤', label: 'Add Patient',  g: '#FEDA77, #F58529', go: '/phygeo/patients/add' },
+    { icon: '⏱️', label: 'Log Visit',   g: '#F58529, #DD2A7B', go: '/phygeo/patients'     },
+    { icon: '📂', label: 'Records',      g: '#DD2A7B, #8134AF', go: '/phygeo/records'      },
+    { icon: '🧾', label: 'Billing',      g: '#8134AF, #515BD4', go: '/phygeo/billing'      },
   ]
 
   return (
@@ -73,7 +73,7 @@ export default function Dashboard() {
 
           <div style={{ display: 'flex', gap: 8 }}>
             <button
-              onClick={() => navigate('/phyjio/patients/add')}
+              onClick={() => navigate('/phygeo/patients/add')}
               style={{
                 width: 42, height: 42, borderRadius: 21,
                 background: 'rgba(255,255,255,0.22)',
@@ -83,7 +83,7 @@ export default function Dashboard() {
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>+</button>
             <button
-              onClick={() => { logout(); navigate('/phyjio/lock', { replace: true }) }}
+              onClick={() => { logout(); navigate('/phygeo/lock', { replace: true }) }}
               style={{
                 width: 42, height: 42, borderRadius: 21,
                 background: 'rgba(255,255,255,0.18)',
@@ -98,7 +98,7 @@ export default function Dashboard() {
         {/* Active visit banner */}
         {activeVisit && (
           <div
-            onClick={() => navigate(`/phyjio/visit/active/${activeVisit.patientId}`)}
+            onClick={() => navigate(`/phygeo/visit/active/${activeVisit.patientId}`)}
             style={{
               background: 'rgba(255,255,255,0.20)',
               backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',

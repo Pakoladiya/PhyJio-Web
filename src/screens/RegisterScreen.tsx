@@ -58,7 +58,7 @@ export default function RegisterScreen() {
     setBio(true)
     await setupBiometric()
     setBio(false)
-    navigate('/phyjio', { replace: true })
+    navigate('/phygeo', { replace: true })
   }
 
   const current = step === 'confirm' ? confirm : pin
@@ -87,11 +87,11 @@ export default function RegisterScreen() {
       alignItems: 'center', justifyContent: 'center', padding: 24,
     }}>
       {/* Logo */}
-      <img src="/icon-192.png" alt="PhyJio" style={{
+      <img src="/icon-192.png" alt="PhyGeo" style={{
         width: 80, height: 80, borderRadius: 22,
         marginBottom: 12, boxShadow: '0 8px 28px rgba(0,0,0,0.22)',
       }} />
-      <h1 style={{ color: '#fff', fontSize: 30, fontWeight: 800, marginBottom: 4 }}>PhyJio</h1>
+      <h1 style={{ color: '#fff', fontSize: 30, fontWeight: 800, marginBottom: 4 }}>PhyGeo</h1>
       <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: 14, marginBottom: 36, fontWeight: 500 }}>
         Let's set up your account
       </p>
@@ -175,7 +175,7 @@ export default function RegisterScreen() {
           }}>
             {bioLoading ? 'Setting up…' : '👆 Enable Biometric'}
           </button>
-          <button onClick={() => navigate('/phyjio', { replace: true })} style={{
+          <button onClick={() => navigate('/phygeo', { replace: true })} style={{
             width: '100%', padding: 14, borderRadius: 18,
             border: '1px solid rgba(255,255,255,0.35)',
             background: 'transparent', color: '#fff', fontSize: 15,

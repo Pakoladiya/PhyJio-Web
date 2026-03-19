@@ -14,12 +14,12 @@ const TEMPLATES = [
 function buildMsg(id: string, name: string, extra: string) {
   const n = name || 'Patient'
   switch (id) {
-    case 'delay':        return `🙏 *Dear ${n},*\nI am running approximately *${extra||'15'} minutes late* for today's visit. Will be there shortly. Sorry for the inconvenience.\n\n_— PhyJio Home Physiotherapy_`
-    case 'absent_today': return `🙏 *Dear ${n},*\nDue to *${extra||'an emergency'}*, I will *not be able to visit today*. Will reschedule soon.\n\n_— PhyJio Home Physiotherapy_`
-    case 'absent_tmrw':  return `🙏 *Dear ${n},*\nI will *not be available tomorrow*${extra?` due to *${extra}*`:''}. Will plan next visit soon.\n\n_— PhyJio Home Physiotherapy_`
-    case 'confirm':      return `✅ *Appointment Confirmed*\n\nDear *${n}*,\nYour session is confirmed for *today*.\n\nPlease ensure:\n• Patient is rested\n• Comfortable clothing\n• Exercise mat ready\n\n_— PhyJio Home Physiotherapy_`
-    case 'charges':      return `💼 *PhyJio — Home Visit Charges*\n\nDear *${n}*,\n\n• Per Visit: ₹${extra||'500'}\n• Monthly Package: On request\n\nPayment: Cash / UPI accepted.\n\n_— PhyJio Home Physiotherapy_`
-    case 'bill':         return `🧾 *PhyJio — Invoice Ready*\n\nDear *${n}*,\nYour invoice is ready.\n\n*Total Amount: ₹${extra||'0'}*\n\nPlease arrange payment at earliest convenience.\n\n_— PhyJio Home Physiotherapy_`
+    case 'delay':        return `🙏 *Dear ${n},*\nI am running approximately *${extra||'15'} minutes late* for today's visit. Will be there shortly. Sorry for the inconvenience.\n\n_— PhyGeo Home Physiotherapy_`
+    case 'absent_today': return `🙏 *Dear ${n},*\nDue to *${extra||'an emergency'}*, I will *not be able to visit today*. Will reschedule soon.\n\n_— PhyGeo Home Physiotherapy_`
+    case 'absent_tmrw':  return `🙏 *Dear ${n},*\nI will *not be available tomorrow*${extra?` due to *${extra}*`:''}. Will plan next visit soon.\n\n_— PhyGeo Home Physiotherapy_`
+    case 'confirm':      return `✅ *Appointment Confirmed*\n\nDear *${n}*,\nYour session is confirmed for *today*.\n\nPlease ensure:\n• Patient is rested\n• Comfortable clothing\n• Exercise mat ready\n\n_— PhyGeo Home Physiotherapy_`
+    case 'charges':      return `💼 *PhyGeo — Home Visit Charges*\n\nDear *${n}*,\n\n• Per Visit: ₹${extra||'500'}\n• Monthly Package: On request\n\nPayment: Cash / UPI accepted.\n\n_— PhyGeo Home Physiotherapy_`
+    case 'bill':         return `🧾 *PhyGeo — Invoice Ready*\n\nDear *${n}*,\nYour invoice is ready.\n\n*Total Amount: ₹${extra||'0'}*\n\nPlease arrange payment at earliest convenience.\n\n_— PhyGeo Home Physiotherapy_`
     default: return ''
   }
 }
@@ -48,7 +48,7 @@ export default function QuickComm() {
   const extraHint  = sel === 'delay' ? '15' : sel === 'charges' || sel === 'bill' ? '500' : 'e.g. Personal emergency'
 
   function contactDev() {
-    const msg = encodeURIComponent('Hello, I am using PhyJio app and need some help.')
+    const msg = encodeURIComponent('Hello, I am using PhyGeo app and need some help.')
     window.open(`https://wa.me/919228108454?text=${msg}`, '_blank')
   }
 

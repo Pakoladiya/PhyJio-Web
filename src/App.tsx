@@ -15,8 +15,8 @@ import Billing       from './screens/Billing'
 
 function Guard({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isRegistered } = useAuthStore()
-  if (!isRegistered)   return <Navigate to="/phyjio/register" replace />
-  if (!isAuthenticated) return <Navigate to="/phyjio/lock" replace />
+  if (!isRegistered)   return <Navigate to="/phygeo/register" replace />
+  if (!isAuthenticated) return <Navigate to="/phygeo/lock" replace />
   return <>{children}</>
 }
 
@@ -24,9 +24,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/phyjio/register" element={<RegisterScreen />} />
-        <Route path="/phyjio/lock"     element={<LockScreen />} />
-        <Route path="/phyjio" element={<Guard><MainLayout /></Guard>}>
+        <Route path="/phygeo/register" element={<RegisterScreen />} />
+        <Route path="/phygeo/lock"     element={<LockScreen />} />
+        <Route path="/phygeo" element={<Guard><MainLayout /></Guard>}>
           <Route index                              element={<Dashboard />} />
           <Route path="patients"                    element={<PatientList />} />
           <Route path="patients/add"                element={<AddPatient />} />
@@ -36,7 +36,7 @@ export default function App() {
           <Route path="records"                     element={<RecordsScreen />} />
           <Route path="billing"                     element={<Billing />} />
         </Route>
-        <Route path="*" element={<Navigate to="/phyjio" replace />} />
+        <Route path="*" element={<Navigate to="/phygeo" replace />} />
       </Routes>
     </BrowserRouter>
   )

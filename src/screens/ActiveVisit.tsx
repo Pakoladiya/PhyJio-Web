@@ -42,7 +42,7 @@ export default function ActiveVisit() {
         status: 'completed', notes,
       })
     }
-    navigate(`/phyjio/patients/${patientId}`, { replace: true })
+    navigate(`/phygeo/patients/${patientId}`, { replace: true })
   }
 
   function cancelVisit() {

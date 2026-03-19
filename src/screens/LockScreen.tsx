@@ -10,7 +10,7 @@ export default function LockScreen() {
   const [error,    setError]  = useState('')
   const [bioLoading, setBio]  = useState(false)
 
-  useEffect(() => { if (isAuthenticated) navigate('/phyjio', { replace: true }) }, [isAuthenticated])
+  useEffect(() => { if (isAuthenticated) navigate('/phygeo', { replace: true }) }, [isAuthenticated])
   useEffect(() => { if (hasBiometric) handleBiometric() }, [])
 
   function triggerShake(msg: string) {
@@ -47,11 +47,11 @@ export default function LockScreen() {
     }}>
 
       {/* Logo + Title */}
-      <img src="/icon-192.png" alt="PhyJio" style={{
+      <img src="/icon-192.png" alt="PhyGeo" style={{
         width: 80, height: 80, borderRadius: 22,
         marginBottom: 12, boxShadow: '0 8px 28px rgba(0,0,0,0.22)',
       }} />
-      <h1 style={{ color: '#fff', fontSize: 30, fontWeight: 800, marginBottom: 4 }}>PhyJio</h1>
+      <h1 style={{ color: '#fff', fontSize: 30, fontWeight: 800, marginBottom: 4 }}>PhyGeo</h1>
       <p style={{ color: 'rgba(255,255,255,0.70)', fontSize: 15, marginBottom: 40, fontWeight: 500 }}>
         {firstName ? `Welcome back, ${firstName}` : 'Please unlock to continue'}
       </p>
