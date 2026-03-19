@@ -26,7 +26,8 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://phyjio.nijanandfit.in/manifest.webmanifest)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://phyjio.nijanandfit.in/manifest.json)",
       "Bash(curl -s https://phyjio.nijanandfit.in/)",
-      "Bash(curl -s https://phyjio.nijanandfit.in/manifest.webmanifest)"
+      "Bash(curl -s https://phyjio.nijanandfit.in/manifest.webmanifest)",
+      "Bash(npm install idb-keyval)"
     ]
   }
 }

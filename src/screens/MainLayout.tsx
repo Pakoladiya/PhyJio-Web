@@ -5,7 +5,7 @@ const tabs = [
   { to: '/phyjio',          icon: '🏠', label: 'Home',     end: true },
   { to: '/phyjio/patients', icon: '👥', label: 'Patients'       },
   { to: '/phyjio/visits',   icon: '⏱️', label: 'Visits'        },
-  { to: '/phyjio/messages', icon: '💬', label: 'Messages'       },
+  { to: '/phyjio/records',  icon: '📂', label: 'Records'        },
   { to: '/phyjio/billing',  icon: '🧾', label: 'Billing'        },
 ]
 

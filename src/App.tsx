@@ -10,7 +10,7 @@ import AddPatient    from './screens/AddPatient'
 import PatientDetail from './screens/PatientDetail'
 import ActiveVisit   from './screens/ActiveVisit'
 import VisitLog      from './screens/VisitLog'
-import QuickComm     from './screens/QuickComm'
+import RecordsScreen from './screens/RecordsScreen'
 import Billing       from './screens/Billing'
 
 function Guard({ children }: { children: React.ReactNode }) {
@@ -33,7 +33,7 @@ export default function App() {
           <Route path="patients/:id"                element={<PatientDetail />} />
           <Route path="visits"                      element={<VisitLog />} />
           <Route path="visit/active/:patientId"     element={<ActiveVisit />} />
-          <Route path="messages"                    element={<QuickComm />} />
+          <Route path="records"                     element={<RecordsScreen />} />
           <Route path="billing"                     element={<Billing />} />
         </Route>
         <Route path="*" element={<Navigate to="/phyjio" replace />} />
