@@ -1,0 +1,1 @@
+node -e "const fs=require('fs');const svg='<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"192\" height=\"192\"><rect width=\"192\" height=\"192\" rx=\"40\" fill=\"#008080\"/><text x=\"96\" y=\"130\" font-size=\"100\" text-anchor=\"middle\">🩺</text></svg>';fs.writeFileSync('public/icon.svg',svg);console.log('done');"

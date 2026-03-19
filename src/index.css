@@ -1,0 +1,105 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  /* ✅ Instagram Gradient Colors */
+  --ig-yellow:      #FEDA77;
+  --ig-orange:      #F58529;
+  --ig-pink:        #DD2A7B;
+  --ig-purple:      #8134AF;
+  --ig-deep-purple: #515BD4;
+
+  /* ✅ Primary = Instagram pink/purple replacing teal */
+  --teal:           #DD2A7B;
+  --teal-dark:      #8134AF;
+  --teal-light:     #FCE4F0;
+
+  /* ✅ Backgrounds */
+  --bg:             #FAFAFA;
+  --surface:        #FFFFFF;
+
+  /* ✅ Text */
+  --text:           #1A1A2E;
+  --text-muted:     #737373;
+
+  /* ✅ Status colors */
+  --success:        #2ECC71;
+  --danger:         #E74C3C;
+  --warning:        #F58529;
+
+  /* ✅ Border and shadow with Instagram pink tint */
+  --border:         #DBDBDB;
+  --shadow:         0 2px 12px rgba(221, 42, 123, 0.10);
+
+  /* ✅ Full Instagram gradient */
+  --ig-gradient: linear-gradient(
+    45deg,
+    #FEDA77 0%,
+    #F58529 25%,
+    #DD2A7B 50%,
+    #8134AF 75%,
+    #515BD4 100%
+  );
+
+  /* ✅ Softer gradient for backgrounds */
+  --ig-gradient-soft: linear-gradient(
+    135deg,
+    #FCE4F0 0%,
+    #EDE4F7 50%,
+    #E4E8FC 100%
+  );
+}
+
+html, body, #root {
+  height: 100%;
+  background: var(--bg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+button { cursor: pointer; border: none; outline: none; font-family: inherit; background: none; }
+input, textarea, select { font-family: inherit; outline: none; }
+a { text-decoration: none; color: inherit; }
+
+/* ✅ Instagram gradient utility classes */
+.ig-gradient {
+  background: var(--ig-gradient);
+}
+
+.ig-gradient-text {
+  background: var(--ig-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ig-gradient-border {
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.ig-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: var(--ig-gradient);
+  z-index: -1;
+}
+
+/* ✅ Smooth transitions globally */
+button, input, textarea, select {
+  transition: all 0.2s ease;
+}
+
+/* ✅ Scrollbar styling */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #DD2A7B44; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #DD2A7B88; }
